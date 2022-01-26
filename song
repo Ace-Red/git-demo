@@ -1,0 +1,52 @@
+CREATE TABLE "public.Ticket" (
+	"ticket_id" serial NOT NULL,
+	"seat_number" integer NOT NULL,
+	"purchase_date" DATE NOT NULL,
+	"ticket_type" varchar(30) NOT NULL,
+	"price" FLOAT NOT NULL,
+	"is_active" BOOLEAN NOT NULL,
+	"user_id" integer NOT NULL,
+	"flight_id" integer NOT NULL,
+	CONSTRAINT "Ticket_pk" PRIMARY KEY ("ticket_id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "public.User" (
+	"user_id" serial NOT NULL,
+	"email" varchar(128) NOT NULL,
+	"username" varchar(100) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"data_join" DATE NOT NULL,
+	CONSTRAINT "User_pk" PRIMARY KEY ("user_id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "public.Flight" (
+	"flight_id" serial NOT NULL,
+	"departure_time" DATE NOT NULL,
+	"arrival_time" DATE NOT NULL,
+	"origin" varchar(128) NOT NULL,
+	"destination" varchar(128) NOT NULL,
+	"carrier" varchar(128) NOT NULL,
+	"seat_number" integer NOT NULL,
+	"econom_price" FLOAT NOT NULL,
+	"business_price" FLOAT NOT NULL,
+	CONSTRAINT "Flight_pk" PRIMARY KEY ("flight_id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+ALTER TABLE "public.Ticket" ADD CONSTRAINT "Ticket_fk0" FOREIGN KEY ("user_id") REFERENCES "public.User"("user_id");
+ALTER TABLE "public.Ticket" ADD CONSTRAINT "Ticket_fk1" FOREIGN KEY ("flight_id") REFERENCES "public.Flight"("flight_id");
+
+
+
+
